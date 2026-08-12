@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local / unused large assets (keep public/models/sky-dragon.glb)
+*.zip
+/animated_dragon_three_motion_loops.glb
+/animated-dragon-three-motion-loops.zip
+/25th Sept -Updated AI.pdf
+/public/models/arc-reactor.glb
+/public/models/hero.glb
+/public/models/cyberpunk_drone_concept_design_by_get3dmodels.glb
+/public/models/arc/
