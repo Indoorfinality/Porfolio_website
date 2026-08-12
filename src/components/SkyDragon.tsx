@@ -20,7 +20,7 @@ import { useReducedMotion } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
 
 /** LasquetiSpice — Animated Dragon Three Motion Loops (CC-BY) */
-const DRAGON_URL = "/models/sky-dragon.glb?v=fly5";
+const DRAGON_URL = "/models/sky-dragon.glb";
 
 /** Keep wing/body flap tracks; drop root travel so we steer the flight path. */
 function flyingInPlaceClip(_source: Object3D, animations: AnimationClip[]) {
@@ -32,7 +32,6 @@ function flyingInPlaceClip(_source: Object3D, animations: AnimationClip[]) {
   clip.tracks = clip.tracks.filter((track) => {
     const isPos = track.name.endsWith(".position");
     if (!isPos) return true;
-    // Root / pelvis travel — we drive that ourselves
     return !/(^|[/.])(root\.4_4|pelvis\.5_5|GLTF_created_0_rootJoint|skeletal\.3_3|RootNode)(\.|$)/i.test(
       track.name,
     );
@@ -113,7 +112,6 @@ function FlyingDragon({ reduced }: { reduced: boolean }) {
     const t = state.clock.elapsedTime;
     const dt = Math.min(delta, 0.05);
 
-    // Realistic pace: mostly glide, occasional surge — not frantic
     const glide = 0.5 + 0.5 * Math.sin(t * 0.09);
     const surge = 0.5 + 0.5 * Math.sin(t * 0.22 + 1.7);
     const dash = Math.pow(0.5 + 0.5 * Math.sin(t * 0.13 + 0.4), 3);
@@ -124,7 +122,6 @@ function FlyingDragon({ reduced }: { reduced: boolean }) {
     phase.current += dt * pace * 0.78;
     const p = phase.current;
 
-    // Wide, gentle loom — depth and turns feel natural
     const x =
       Math.sin(p * 0.55) * 2.05 +
       Math.sin(p * 0.82 + 0.6) * 0.45 +
@@ -154,7 +151,6 @@ function FlyingDragon({ reduced }: { reduced: boolean }) {
 
     g.position.copy(next);
 
-    // Soft lean with the turn; stronger only on surges
     const speedSq = velX * velX + velY * velY + velZ * velZ;
     const speed = Math.sqrt(speedSq);
     if (speedSq > 1e-8) {
@@ -165,11 +161,9 @@ function FlyingDragon({ reduced }: { reduced: boolean }) {
       g.rotation.set(pitch + 0.03, yaw + Math.PI, bank);
     }
 
-    // Closer (higher z) → larger; farther → smaller — capped so wings stay in frame
     const depthScale = MathUtils.clamp(0.26 + (z + 2.1) * 0.07, 0.26, 0.48);
     g.scale.setScalar(depthScale);
 
-    // Wing flaps: calm glide vs slightly quicker on a push
     const flap = MathUtils.clamp(0.7 + pace * 0.55 + speed * 5, 0.65, 1.35);
     actionRef.current?.setEffectiveTimeScale(flap);
   });
@@ -187,19 +181,18 @@ function FlyingDragon({ reduced }: { reduced: boolean }) {
   );
 }
 
-useGLTF.preload(DRAGON_URL);
-
 export default function SkyDragon() {
   const reduce = useReducedMotion();
-  const [ready, setReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { skyTheme } = useTheme();
   const isDark = skyTheme === "dark";
 
   useEffect(() => {
-    setReady(true);
+    setMounted(true);
+    void useGLTF.preload(DRAGON_URL);
   }, []);
 
-  if (!ready) return null;
+  if (!mounted) return null;
 
   return (
     <div
@@ -207,10 +200,18 @@ export default function SkyDragon() {
       aria-hidden
     >
       <Canvas
-        gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-        dpr={[1, 1.6]}
+        gl={{
+          alpha: true,
+          antialias: true,
+          powerPreference: "default",
+          failIfMajorPerformanceCaveat: false,
+        }}
+        dpr={[1, 1.5]}
         camera={{ position: [0, 0, 7.6], fov: 32, near: 0.1, far: 40 }}
         style={{ width: "100%", height: "100%", background: "transparent" }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
       >
         <ambientLight intensity={isDark ? 0.45 : 0.85} />
         <hemisphereLight

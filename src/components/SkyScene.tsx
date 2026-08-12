@@ -2,9 +2,14 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import dynamic from "next/dynamic";
 import { useTheme } from "@/components/ThemeProvider";
 import { gsap, registerGsap, ScrollTrigger } from "@/lib/gsap";
-import SkyDragon from "@/components/SkyDragon";
+
+const SkyDragon = dynamic(() => import("@/components/SkyDragon"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const EASE = [0.42, 0, 0.2, 1] as const;
 const DURATION = 2.1;
