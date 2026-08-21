@@ -9,8 +9,8 @@ export const site = {
   summary:
     "Software Developer at Bitskraft working with FastAPI, React, and Playwright—plus RPA at Social Security Fund and a Data Science background.",
   links: {
-    github: "https://github.com/anushnachaulagain",
-    linkedin: "https://www.linkedin.com/in/anushnachaulagain",
+    github: "https://github.com/Indoorfinality",
+    linkedin: "https://www.linkedin.com/in/anushna-chaulagain-a15430197/",
     kaggle: "https://www.kaggle.com/anushnachaulagain",
   },
   education: {
