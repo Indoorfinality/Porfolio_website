@@ -52,6 +52,11 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.title}`,
     description: site.tagline,
   },
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   robots: { index: true, follow: true },
 };
 

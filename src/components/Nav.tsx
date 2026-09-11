@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { site } from "@/data/site";
@@ -42,14 +43,26 @@ export default function Nav() {
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
         <motion.a
-          href="#top"
+          href="/#top"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="font-[family-name:var(--font-display)] text-2xl tracking-wide text-[var(--cream)]"
+          className="group flex items-center gap-2.5 font-[family-name:var(--font-display)] text-2xl tracking-wide text-[var(--cream)]"
         >
-          {site.shortName}
-          <span className="text-[var(--accent-hot)]">.</span>
+          <div className="relative h-8 w-8 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-muted)] transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt={site.name}
+              fill
+              sizes="32px"
+              className="object-cover"
+              priority
+            />
+          </div>
+          <span>
+            {site.shortName}
+            <span className="text-[var(--accent-hot)]">.</span>
+          </span>
         </motion.a>
 
         <ul className="hidden items-center gap-8 md:flex">
