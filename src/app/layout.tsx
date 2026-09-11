@@ -19,45 +19,87 @@ const body = Source_Sans_3({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+
   title: {
-    default: `${site.name} — ${site.title}`,
-    template: `%s — ${site.name}`,
+    default: "Anushna Chaulagain | Software Developer & AI Engineer",
+    template: "%s | Anushna Chaulagain",
   },
-  description: site.summary,
+
+  description:
+    "Official portfolio of Anushna Chaulagain, a Software Developer specializing in Python, FastAPI, React, AI, automation, RPA, machine learning, and data science.",
+
   keywords: [
+    "Anushna Chaulagain",
+    "Anushna Chaulagain Software Developer",
+    "Anushna Chaulagain Portfolio",
+    "Python Developer",
     "Software Developer",
+    "AI Engineer",
+    "Machine Learning Engineer",
+    "Automation Developer",
     "FastAPI",
     "React",
     "Playwright",
     "RPA",
-    "data science",
-    "Kathmandu",
-    site.name,
+    "Data Science",
+    "Kathmandu Nepal",
   ],
-  authors: [{ name: site.name, url: site.links.github }],
-  creator: site.name,
+
+  authors: [
+    {
+      name: "Anushna Chaulagain",
+      url: site.url,
+    },
+  ],
+
+  creator: "Anushna Chaulagain",
+
   alternates: {
-    canonical: "./",
+    canonical: site.url,
   },
+
   openGraph: {
-    title: `${site.name} — ${site.title}`,
-    description: site.tagline,
-    url: "./",
+    title: "Anushna Chaulagain | Software Developer & AI Engineer",
+
+    description:
+      "Official portfolio of Anushna Chaulagain, a Software Developer specializing in Python, AI, automation, FastAPI, React, and intelligent systems.",
+
+    url: site.url,
+
     type: "website",
+
     locale: "en_US",
-    siteName: site.name,
+
+    siteName: "Anushna Chaulagain",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.title}`,
-    description: site.tagline,
+
+    title: "Anushna Chaulagain | Software Developer & AI Engineer",
+
+    description:
+      "Software Developer specializing in Python, AI, automation, FastAPI, React, and intelligent systems.",
   },
+
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
-  robots: { index: true, follow: true },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const themeInitScript = `
@@ -79,6 +121,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Anushna Chaulagain",
+    url: site.url,
+    jobTitle: "Software Developer",
+    description:
+      "Software Developer specializing in Python, AI, automation, FastAPI, React, machine learning, and data science.",
+    sameAs: [
+      site.links.github,
+      site.links.linkedin,
+      site.links.kaggle,
+    ],
+  };
+
   return (
     <html
       lang="en"
@@ -86,8 +143,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personSchema),
+          }}
+        />
+
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
+
       <body className="relative flex min-h-full flex-col">
         <ThemeProvider>
           <SkyCursorTrail />
