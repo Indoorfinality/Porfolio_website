@@ -4,7 +4,7 @@ import { site } from "@/data/site";
 import { projectPath } from "@/lib/slug";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || site.url;
+  const base = site.url;
   const now = new Date();
 
   return [

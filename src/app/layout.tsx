@@ -18,7 +18,7 @@ const body = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.url),
+  metadataBase: new URL(site.url),
   title: {
     default: `${site.name} — ${site.title}`,
     template: `%s — ${site.name}`,
