@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
+import { site } from "@/data/site";
 import { projectPath } from "@/lib/slug";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || site.url;
   const now = new Date();
 
   return [

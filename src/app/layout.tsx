@@ -18,7 +18,7 @@ const body = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.url),
   title: {
     default: `${site.name} — ${site.title}`,
     template: `%s — ${site.name}`,
@@ -36,9 +36,13 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name, url: site.links.github }],
   creator: site.name,
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     title: `${site.name} — ${site.title}`,
     description: site.tagline,
+    url: "./",
     type: "website",
     locale: "en_US",
     siteName: site.name,

@@ -15,7 +15,7 @@ import { site } from "@/data/site";
 type Props = { params: Promise<{ slug: string }> };
 
 const base = () =>
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL || site.url;
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));

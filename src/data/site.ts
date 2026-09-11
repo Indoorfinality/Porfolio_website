@@ -1,6 +1,7 @@
 export const site = {
   name: "Anushna Chaulagain",
   shortName: "Anushna",
+  url: "https://anushnachaulagain.com.np",
   title: "Software Developer",
   tagline: "APIs, React apps, and automation that ship.",
   location: "Kathmandu, Nepal",
