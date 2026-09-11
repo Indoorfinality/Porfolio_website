@@ -47,22 +47,19 @@ export default function Nav() {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="group flex items-center gap-2.5 font-[family-name:var(--font-display)] text-2xl tracking-wide text-[var(--cream)]"
+          aria-label={site.name}
+          className="group flex items-center"
         >
-          <div className="relative h-8 w-8 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-muted)] transition-transform duration-300 group-hover:scale-105">
+          <div className="relative h-11 w-11 overflow-hidden rounded-full border border-[var(--line)] bg-[var(--surface-muted)] shadow-md transition-all duration-300 group-hover:scale-105 group-hover:border-[var(--accent-hot)] sm:h-12 sm:w-12">
             <Image
               src="/logo.png"
               alt={site.name}
               fill
-              sizes="32px"
+              sizes="(max-width: 640px) 44px, 48px"
               className="object-cover"
               priority
             />
           </div>
-          <span>
-            {site.shortName}
-            <span className="text-[var(--accent-hot)]">.</span>
-          </span>
         </motion.a>
 
         <ul className="hidden items-center gap-8 md:flex">
